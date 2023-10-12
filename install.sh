@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Are you sure you want to install these dotfiles? It will remove your existing dotfiles (they can still be recovered; check the ~/dotfiles-trash directory)."
-read -p "(y/n): " install_dotfiles
+read -p "(Y/n): " install_dotfiles
 
 function install_ohmyzsh {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -35,10 +35,25 @@ function copy_dotfiles {
   copy_dotfile .p10k.zsh ~/.p10k.zsh
 }
  
+function set_git_credentials {
+  echo "Do you want to set Git credentials?"
+  read -p "(Y/n): " set_git_creds
+  if [ -z "$set_git_creds" ] || [ "${set_git_creds,,}" == "y" ]; then
+    read -p "Git user name: " git_username
+    read -p "Git user email: " git_useremail
+    git config --global user.name "$git_username"
+    git config --global user.email "$git_useremail"
+    echo "Git credentials set."
+  else
+    echo "Git credentials not set."
+  fi
+}
+
 if [ -z "$install_dotfiles" ] || [ "${install_dotfiles,,}" == "y" ]; then
   copy_dotfiles
   install_ohmyzsh
   install_zsh_plugins
+  set_git_credentials
 else
   echo "Okay, not doing it."
 fi

@@ -3,9 +3,9 @@
 echo "Are you sure you want to install these dotfiles? It will remove your existing dotfiles (they can still be recovered; check the ~/dotfiles-trash directory)."
 read -p "(Y/n): " install_dotfiles
 
-function install_ohmyzsh {
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-}
+# function install_ohmyzsh {
+#   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# }
 
 function install_zsh_plugins {
   echo "Installing Zsh plugins..."
@@ -14,7 +14,7 @@ function install_zsh_plugins {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   
-  echo "Installation completed."
+  # echo "Installation completed."
 }
 
 function copy_dotfile {
@@ -46,12 +46,13 @@ function set_git_credentials {
     echo "Git credentials set."
   else
     echo "Git credentials not set."
+    echo "Installation completed."
   fi
 }
 
 if [ -z "$install_dotfiles" ] || [ "${install_dotfiles,,}" == "y" ]; then
   copy_dotfiles
-  install_ohmyzsh
+  # install_ohmyzsh
   install_zsh_plugins
   set_git_credentials
 else

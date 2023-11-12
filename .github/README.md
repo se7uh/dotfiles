@@ -5,5 +5,5 @@
 `git clone https://github.com/npc-123/dotfiles`
 3. Jalankan skrip Instalasi
 `bash install.sh`
-4. keluar terminal dan jalankan lagi
+4. Mulai ulang Terminal
 5. Selesai

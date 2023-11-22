@@ -14,7 +14,6 @@ function install_zsh_plugins {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   
-  # echo "Instalasi selesai."
 }
 
 function copy_dotfile {
@@ -39,14 +38,13 @@ function set_git_credentials {
   echo "Apakah Anda ingin mengatur kredensial Git?"
   read -p "(Y/n): " set_git_creds
   if [ -z "$set_git_creds" ] || [ "${set_git_creds,,}" == "y" ]; then
-    read -p "Nama pengguna Git: " git_username
-    read -p "Email pengguna Git: " git_useremail
+    read -p "Username Git: " git_username
+    read -p "Email Git: " git_useremail
     git config --global user.name "$git_username"
     git config --global user.email "$git_useremail"
     echo "Kredensial Git diatur."
   else
     echo "Kredensial Git tidak diatur."
-    echo "Instalasi selesai."
   fi
 }
 
@@ -55,6 +53,7 @@ if [ -z "$install_dotfiles" ] || [ "${install_dotfiles,,}" == "y" ]; then
   # install_ohmyzsh
   install_zsh_plugins
   set_git_credentials
+  echo "\nInstalasi selesai."
 else
   echo "Baiklah, tidak melakukannya."
 fi

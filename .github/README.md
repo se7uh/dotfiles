@@ -1,7 +1,7 @@
 # dotfiles
 ## Instalasi
 1. Pasang [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh)
-```
+```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 2. Clone repo ini

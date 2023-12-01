@@ -53,7 +53,7 @@ if [ -z "$install_dotfiles" ] || [ "${install_dotfiles,,}" == "y" ]; then
   # install_ohmyzsh
   install_zsh_plugins
   set_git_credentials
-  echo "\nInstalasi selesai."
+  echo "Instalasi selesai."
 else
   echo "Baiklah, tidak melakukannya."
 fi

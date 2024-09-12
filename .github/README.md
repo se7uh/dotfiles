@@ -6,7 +6,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 ```
 2. Clone repo ini
 ```
-git clone https://github.com/npc-123/dotfiles
+git clone https://github.com/se7uh/dotfiles
 ```
 3. Jalankan skrip Instalasi
 ```

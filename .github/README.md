@@ -2,6 +2,9 @@
 
 A collection of my personal dotfiles for a customized and efficient terminal experience, featuring Oh My Zsh with powerful plugins and a beautiful theme.
 
+## Preview
+![Terminal Preview](https://github.com/user-attachments/assets/65ee7bdd-74c1-4210-8ef3-1d48202a5ab0)
+
 ## Features
 - Powerlevel10k theme for a modern, informative prompt
 - Syntax highlighting for better command readability

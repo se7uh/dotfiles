@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Test Suite for bin/dot CLI Helper
+# Test Suite for bin/dots CLI Helper
 # Tests against pre-agreed seams: Sandbox ($TEST_HOME / $DOTFILES_REPO) & Dry-Run (--test)
 
 PASS_COUNT=0
@@ -53,7 +53,7 @@ function assert_symlink_to() {
 }
 
 echo "========================================"
-echo "🧪 Running tests/test_dot.sh"
+echo "🧪 Running tests/test_dots.sh"
 echo "========================================"
 
 # Setup Sandbox Seam environment
@@ -69,8 +69,8 @@ echo 'keybinds = "default"' > "$TEST_HOME/.config/zellij/config.kdl"
 echo 'mytool = true' > "$TEST_HOME/.mytoolrc"
 
 mkdir -p "$DOTFILES_REPO/bin"
-# Copy bin/dot to DOTFILES_REPO if exists, else we are testing existing repo location
-DOT_BIN="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/bin/dot"
+# Copy bin/dots to DOTFILES_REPO if exists, else we are testing existing repo location
+DOT_BIN="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/bin/dots"
 
 if [[ ! -x "$DOT_BIN" ]]; then
   echo "❌ FAIL: $DOT_BIN is not found or not executable yet (RED phase expected if not implemented)"

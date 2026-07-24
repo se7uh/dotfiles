@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Dot Helper (bin/dot)
+# Dot Helper (bin/dots)
 # Zero-dependency CLI utility for managing dotfiles repository and symlinks
 
 REPO_DIR="${DOTFILES_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
@@ -19,8 +19,8 @@ for arg in "$@"; do
 done
 
 function print_help() {
-  echo "Dot Helper (bin/dot)"
-  echo "Usage: dot [options] <command> [arguments]"
+  echo "Dot Helper (bin/dots)"
+  echo "Usage: dots [options] <command> [arguments]"
   echo ""
   echo "Commands:"
   echo "  add <path>       Move file/directory to dotfiles repo and symlink back"
@@ -45,8 +45,8 @@ sub_args=("${ARGS[@]:1}")
 case "$COMMAND" in
   add)
     if [[ ${#sub_args[@]} -eq 0 ]]; then
-      echo "❌ Error: 'dot add' requires a target file or directory path." >&2
-      echo "Usage: dot add <path>" >&2
+      echo "❌ Error: 'dots add' requires a target file or directory path." >&2
+      echo "Usage: dots add <path>" >&2
       exit 1
     fi
 
@@ -118,7 +118,7 @@ case "$COMMAND" in
         echo "✅ Added '$rel_name' to dotfiles repo! ($repo_target)"
       fi
     else
-      echo "❌ Error: 'dot add' supports files under '$TARGET_HOME/.config/*' or root dotfiles ('$TARGET_HOME/.*')." >&2
+      echo "❌ Error: 'dots add' supports files under '$TARGET_HOME/.config/*' or root dotfiles ('$TARGET_HOME/.*')." >&2
       exit 1
     fi
     ;;

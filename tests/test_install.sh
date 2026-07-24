@@ -84,11 +84,11 @@ echo "--> Test 1: Dry-Run (--test) mode on install.sh"
 output=$("$DOTFILES_REPO/install.sh" --test 2>&1 || true)
 assert_equals "old zshrc content" "$(cat "$TEST_HOME/.zshrc")" "Original .zshrc preserved after --test"
 assert_equals "old zellij content" "$(cat "$TEST_HOME/.config/zellij/config.kdl")" "Original zellij config preserved after --test"
-if [[ ! -e "$TEST_HOME/.local/bin/dot" ]]; then
-  echo "  ✅ PASS: bin/dot not installed during --test"
+if [[ ! -e "$TEST_HOME/.local/bin/dots" ]]; then
+  echo "  ✅ PASS: bin/dots not installed during --test"
   PASS_COUNT=$((PASS_COUNT + 1))
 else
-  echo "  ❌ FAIL: bin/dot was installed during --test!"
+  echo "  ❌ FAIL: bin/dots was installed during --test!"
   FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
@@ -99,7 +99,7 @@ assert_symlink_to "$TEST_HOME/.zshrc" "$DOTFILES_REPO/.zshrc" "HOME/.zshrc symli
 assert_symlink_to "$TEST_HOME/.p10k.zsh" "$DOTFILES_REPO/.p10k.zsh" "HOME/.p10k.zsh symlinked to repo .p10k.zsh"
 assert_symlink_to "$TEST_HOME/.config/zellij" "$DOTFILES_REPO/config/zellij" "HOME/.config/zellij symlinked to repo config/zellij"
 assert_symlink_to "$TEST_HOME/.config/ghostty" "$DOTFILES_REPO/config/ghostty" "HOME/.config/ghostty symlinked to repo config/ghostty"
-assert_symlink_to "$TEST_HOME/.local/bin/dot" "$DOTFILES_REPO/bin/dot" "bin/dot symlinked to HOME/.local/bin/dot"
+assert_symlink_to "$TEST_HOME/.local/bin/dots" "$DOTFILES_REPO/bin/dots" "bin/dots symlinked to HOME/.local/bin/dots"
 
 echo "--> Test 3: Verify backups in dotfiles-trash/"
 assert_file_exists "$TEST_HOME/dotfiles-trash/.zshrc" "Backup of .zshrc exists in dotfiles-trash"

@@ -105,10 +105,10 @@ function install_dotfiles_and_configs() {
     done
   fi
 
-  # Install bin/dot helper
-  if [ -f "$REPO_DIR/bin/dot" ]; then
-    link_dotfile "bin/dot" "$TARGET_HOME/.local/bin/dot"
-    chmod +x "$REPO_DIR/bin/dot"
+  # Install bin/dots helper
+  if [ -f "$REPO_DIR/bin/dots" ]; then
+    link_dotfile "bin/dots" "$TARGET_HOME/.local/bin/dots"
+    chmod +x "$REPO_DIR/bin/dots"
     ensure_local_bin_in_path
   fi
 }
@@ -178,7 +178,7 @@ function print_completion_message() {
     echo "║  • Powerlevel10k theme is ready            ║"
     echo "║  • ZSH plugins are installed               ║"
     echo "║  • Dotfiles auto-symlinked (config/*)      ║"
-    echo "║  • bin/dot helper installed to PATH        ║"
+    echo "║  • bin/dots helper installed to PATH       ║"
     echo "║                                            ║"
     echo "║  Enjoy your enhanced terminal experience!  ║"
   fi

@@ -120,6 +120,20 @@ else
   FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+echo "--> Test 6: dots invocation via symlink in ~/.local/bin/dots without DOTFILES_REPO set"
+mkdir -p "$TEST_HOME/.local/bin" "$DOTFILES_REPO/bin"
+cp "$DOT_BIN" "$DOTFILES_REPO/bin/dots"
+chmod +x "$DOTFILES_REPO/bin/dots"
+ln -sfn "$DOTFILES_REPO/bin/dots" "$TEST_HOME/.local/bin/dots"
+symlink_status=$(unset DOTFILES_REPO && cd "$TEST_HOME" && "$TEST_HOME/.local/bin/dots" status 2>&1)
+if echo "$symlink_status" | grep -q "On branch"; then
+  echo "  ✅ PASS: dots executed via symlink correctly resolved DOTFILES_REPO"
+  PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ❌ FAIL: dots executed via symlink failed to resolve DOTFILES_REPO! (got output: '$symlink_status')"
+  FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 echo "========================================"
 echo "Summary: $PASS_COUNT passed, $FAIL_COUNT failed"
 if [[ $FAIL_COUNT -gt 0 ]]; then

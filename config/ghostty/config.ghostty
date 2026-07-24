@@ -1,0 +1,3 @@
+window-save-state = always
+theme = Catppuccin Macchiato
+shell-integration-features = ssh-env,ssh-terminfo

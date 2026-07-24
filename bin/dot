@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Dot Helper (bin/dot)
+# Zero-dependency CLI utility for managing dotfiles repository and symlinks
+
+REPO_DIR="${DOTFILES_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+TARGET_HOME="${TEST_HOME:-$HOME}"
+TEST_MODE=false
+
+# Parse global --test / -t flag
+ARGS=()
+for arg in "$@"; do
+  if [[ "$arg" == "--test" || "$arg" == "-t" ]]; then
+    TEST_MODE=true
+  else
+    ARGS+=("$arg")
+  fi
+done
+
+function print_help() {
+  echo "Dot Helper (bin/dot)"
+  echo "Usage: dot [options] <command> [arguments]"
+  echo ""
+  echo "Commands:"
+  echo "  add <path>       Move file/directory to dotfiles repo and symlink back"
+  echo "  status           Run 'git status' inside dotfiles repository"
+  echo "  push [message]   Stage, commit, and push changes in dotfiles repository"
+  echo "  update           Pull latest changes from remote and run install.sh"
+  echo ""
+  echo "Options:"
+  echo "  -t, --test       Run in dry-run mode (no filesystem changes)"
+  echo "  -h, --help       Show this help message"
+  echo ""
+}
+
+if [[ ${#ARGS[@]} -eq 0 ]]; then
+  print_help
+  exit 0
+fi
+
+COMMAND="${ARGS[0]}"
+sub_args=("${ARGS[@]:1}")
+
+case "$COMMAND" in
+  add)
+    if [[ ${#sub_args[@]} -eq 0 ]]; then
+      echo "❌ Error: 'dot add' requires a target file or directory path." >&2
+      echo "Usage: dot add <path>" >&2
+      exit 1
+    fi
+
+    raw_path="${sub_args[0]}"
+    # Strip trailing slash if present
+    clean_path="${raw_path%/}"
+
+    # Resolve absolute path against TARGET_HOME / current dir
+    if [[ "$clean_path" != /* ]]; then
+      clean_path="$(pwd)/$clean_path"
+    fi
+
+    if [[ ! -e "$clean_path" ]]; then
+      echo "❌ Error: '$clean_path' does not exist." >&2
+      exit 1
+    fi
+
+    # Check if already a symlink into our repo
+    if [[ -L "$clean_path" ]]; then
+      link_target=$(readlink "$clean_path")
+      if [[ "$link_target" == "$REPO_DIR"* ]]; then
+        echo "ℹ️ '$clean_path' is already symlinked to the dotfiles repository." >&2
+        exit 0
+      fi
+    fi
+
+    # Check if inside repository already
+    if [[ "$clean_path" == "$REPO_DIR"* ]]; then
+      echo "ℹ️ '$clean_path' is already inside the dotfiles repository." >&2
+      exit 0
+    fi
+
+    if [[ "$clean_path" == "$TARGET_HOME/.config/"* ]]; then
+      rel_path="${clean_path#$TARGET_HOME/.config/}"
+      repo_target="$REPO_DIR/config/$rel_path"
+
+      if [[ -e "$repo_target" && ! -L "$clean_path" ]]; then
+        echo "❌ Error: Target '$repo_target' already exists in repository." >&2
+        exit 1
+      fi
+
+      if [[ "$TEST_MODE" == true ]]; then
+        echo "[TEST] Would create directory: $(dirname "$repo_target")"
+        echo "[TEST] Would move $clean_path -> $repo_target"
+        echo "[TEST] Would symlink $clean_path -> $repo_target"
+      else
+        mkdir -p "$(dirname "$repo_target")"
+        mv "$clean_path" "$repo_target"
+        mkdir -p "$(dirname "$clean_path")"
+        ln -sfn "$repo_target" "$clean_path"
+        echo "✅ Added '$rel_path' to dotfiles repo! ($repo_target)"
+      fi
+
+    elif [[ "$clean_path" == "$TARGET_HOME/."* ]]; then
+      rel_name="${clean_path#$TARGET_HOME/}"
+      repo_target="$REPO_DIR/$rel_name"
+
+      if [[ -e "$repo_target" && ! -L "$clean_path" ]]; then
+        echo "❌ Error: Target '$repo_target' already exists in repository." >&2
+        exit 1
+      fi
+
+      if [[ "$TEST_MODE" == true ]]; then
+        echo "[TEST] Would move $clean_path -> $repo_target"
+        echo "[TEST] Would symlink $clean_path -> $repo_target"
+      else
+        mv "$clean_path" "$repo_target"
+        ln -sfn "$repo_target" "$clean_path"
+        echo "✅ Added '$rel_name' to dotfiles repo! ($repo_target)"
+      fi
+    else
+      echo "❌ Error: 'dot add' supports files under '$TARGET_HOME/.config/*' or root dotfiles ('$TARGET_HOME/.*')." >&2
+      exit 1
+    fi
+    ;;
+
+  status)
+    if [[ "$TEST_MODE" == true ]]; then
+      if [[ ${#sub_args[@]} -gt 0 ]]; then
+        echo "[TEST] Would run: git -C \"$REPO_DIR\" status \"${sub_args[@]}\""
+      else
+        echo "[TEST] Would run: git -C \"$REPO_DIR\" status"
+      fi
+    else
+      if [[ ${#sub_args[@]} -gt 0 ]]; then
+        git -C "$REPO_DIR" status "${sub_args[@]}"
+      else
+        git -C "$REPO_DIR" status
+      fi
+    fi
+    ;;
+
+  push)
+    message="${sub_args[0]:-Update dotfiles ($(date +%Y-%m-%d))}"
+    if [[ "$TEST_MODE" == true ]]; then
+      echo "[TEST] Would run: git -C \"$REPO_DIR\" add -A"
+      echo "[TEST] Would run: git -C \"$REPO_DIR\" commit -m \"$message\""
+      echo "[TEST] Would run: git -C \"$REPO_DIR\" push"
+    else
+      git -C "$REPO_DIR" add -A
+      git -C "$REPO_DIR" commit -m "$message" || echo "ℹ️ Nothing new to commit."
+      git -C "$REPO_DIR" push
+    fi
+    ;;
+
+  update)
+    if [[ "$TEST_MODE" == true ]]; then
+      echo "[TEST] Would run: git -C \"$REPO_DIR\" pull"
+      echo "[TEST] Would run: \"$REPO_DIR/install.sh\" --test"
+    else
+      git -C "$REPO_DIR" pull
+      "$REPO_DIR/install.sh"
+    fi
+    ;;
+
+  help|--help|-h)
+    print_help
+    ;;
+
+  *)
+    echo "❌ Error: Unknown command '$COMMAND'." >&2
+    print_help
+    exit 1
+    ;;
+esac

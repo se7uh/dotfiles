@@ -110,6 +110,7 @@ alias gg='lazygit'
 alias v='nvim'
 alias xampp='sudo /opt/lampp/lampp'
 alias trash='mv -t $HOME/.local/share/Trash/files'
+alias zj='zellij -l welcome'
 
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -119,6 +120,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 export EDITOR='zed --wait'
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/apps/flutter/bin:$PATH"
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -127,18 +130,15 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 export GOPATH=$HOME/go
 
 # pnpm
-export PNPM_HOME="/home/azizz/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
-# Task Master aliases added on 6/23/2025
-alias tm='task-master'
-alias taskmaster='task-master'
 
 # bun completions
-[ -s "/home/azizz/.bun/_bun" ] && source "/home/azizz/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -150,3 +150,13 @@ if [[ -f "$HOME/.zshrc.local" ]]; then
     source "$HOME/.zshrc.local"
 fi
 
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
+
+autoload bashcompinit
+bashcompinit
+[ -f "$HOME/.local/share/bash-completion/completions/am" ] && source "$HOME/.local/share/bash-completion/completions/am"

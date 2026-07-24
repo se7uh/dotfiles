@@ -144,3 +144,9 @@ alias taskmaster='task-master'
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# Load local untracked secrets & machine-specific configuration if present
+if [[ -f "$HOME/.zshrc.local" ]]; then
+    source "$HOME/.zshrc.local"
+fi
+

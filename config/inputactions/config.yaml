@@ -1,0 +1,183 @@
+autoreload: true
+_anchors:
+  - &repeat_delay 250
+  - &repeat_interval 50
+mouse:
+  gestures:
+    - type: press
+      mouse_buttons: [ back ]
+      instant: true
+
+      actions:
+        - on: begin
+          input:
+            - keyboard: [ volumedown ]
+
+        - on: update
+          threshold: *repeat_delay
+          interval: *repeat_interval
+          input:
+            - keyboard: [ volumedown ]
+
+    - type: press
+      mouse_buttons: [ forward ]
+      instant: true
+
+      actions:
+        - on: begin
+          input:
+            - keyboard: [ volumeup ]
+
+        - on: update
+          threshold: *repeat_delay
+          interval: *repeat_interval
+          input:
+            - keyboard: [ volumeup ]
+    # - type: press
+    #   mouse_buttons: [ right, left ]
+    #   instant: true
+    #
+    #   actions:
+    #     - on: begin
+    #       plasma_shortcut: kwin,Window Minimize
+
+touchpad:
+  speed:
+    events: 3
+    swipe_threshold: 15
+    pinch_in_threshold: 0.04
+    pinch_out_threshold: 0.08
+    rotate_threshold: 5
+  delta_multiplier: 1.75
+  gestures:
+    - type: pinch
+      fingers: 2
+      direction: in
+      actions:
+        - 'on': begin
+          plasma_shortcut: 'kwin,Window Close'
+    - type: swipe
+      direction: left_right
+      fingers: 4
+      threshold: 5
+      actions:
+        - 'on': begin
+          input:
+            - keyboard:
+                - +leftmeta
+            - mouse:
+                - +left
+        - 'on': update
+          input:
+            - mouse:
+                - move_by_delta
+        - 'on': end_cancel
+          input:
+            - keyboard:
+                - '-leftmeta'
+            - mouse:
+                - '-left'
+    - type: swipe
+      direction: left_right
+      fingers: 3
+      speed: slow
+      actions:
+        - 'on': begin
+          input:
+            - keyboard:
+                - +leftalt
+                - tab
+        - 'on': update
+          interval: -35
+          input:
+            - keyboard:
+                - left
+        - 'on': update
+          interval: 35
+          input:
+            - keyboard:
+                - right
+        - 'on': end_cancel
+          input:
+            - keyboard:
+                - '-leftalt'
+    - type: press
+      fingers: 3
+      actions:
+        - 'on': end
+          input:
+            - keyboard:
+                - leftalt+tab
+    - type: swipe
+      direction: up
+      fingers: 3
+      speed: slow
+      actions:
+        - 'on': begin
+          plasma_shortcut: 'kwin,Window Maximize'
+          conditions:
+            - negate:
+                - window_state
+              window_state:
+                - maximized
+    - type: swipe
+      direction: down
+      fingers: 3
+      speed: slow
+      actions:
+        - 'on': begin
+          plasma_shortcut: 'kwin,Window Maximize'
+          block_other: true
+          conditions:
+            - window_state:
+                - maximized
+        - 'on': begin
+          plasma_shortcut: 'kwin,Window Minimize'
+          conditions:
+            - negate:
+                - window_state
+              window_state:
+                - fullscreen
+                - maximized
+    - type: swipe
+      direction: up
+      fingers: 4
+      actions:
+        - 'on': begin
+          plasma_shortcut: 'kwin,Switch to Next Desktop'
+    - type: swipe
+      direction: down
+      fingers: 4
+      actions:
+        - 'on': begin
+          plasma_shortcut: 'kwin,Switch to Previous Desktop'
+
+    - type: swipe
+      direction: up_down
+      fingers: 2
+      threshold: 6
+      conditions:
+        - $finger_1_initial_position_percentage_x >= 0.82
+        - $finger_2_initial_position_percentage_x >= 0.82
+      actions:
+        - on: update
+          interval: 25
+          input:
+            - keyboard: [ volumedown ]
+
+        - on: update
+          interval: -25
+          input:
+            - keyboard: [ volumeup ]
+
+    - type: stroke
+      fingers: 2
+      conditions:
+        - $keyboard_modifiers == shift
+      gestures:
+        - strokes: 'ETUAMhFOCN0XQQ3SGTISKh5HGRIkSxz8K0oe4jM/I8oxNCcAUTMy+FswNuphKzjYZCQ7wWEfPatQF0OeOhVLXxQbWFMIIl1BADJkAA=='
+          actions:
+          - command: dolphin ~/.config/ev
+        - strokes: 'FBgA4R4ICPEuABAcMwYTMTMbHTsnRDBIDGNCAFdkZAA='
+          actions:
+          - command: dolphin /mnt/partwo/

@@ -1,0 +1,19 @@
+[
+  {
+    "name": "OmniRoute",
+    "command": "~/.local/share/pnpm/bin/omniroute serve --no-open",
+    "working_directory": "~",
+    "group": "Hermes \u0026 OmniRoute"
+  },
+  {
+    "name": "Hermes WebUI",
+    "command": "python bootstrap.py --foreground",
+    "working_directory": "~/project/hermes-webui",
+    "group": "Hermes \u0026 OmniRoute"
+  },
+  {
+    "name": "mari",
+    "command": "pnpm start",
+    "working_directory": "~/project/mari"
+  }
+]

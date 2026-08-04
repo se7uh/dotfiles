@@ -19,6 +19,22 @@
               "interleaved_reasoning": true,
               "max_tokens_parameter": false
             }
+          },
+          {
+            "name": "coding-agent-fast",
+            "max_tokens": 220000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": true,
+              "max_tokens_parameter": false
+            }
           }
         ]
       }

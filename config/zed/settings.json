@@ -1,4 +1,29 @@
 {
+  "language_models": {
+    "openai_compatible": {
+      "OmniRouter": {
+        "api_url": "https://om.ni/v1",
+        "available_models": [
+          {
+            "name": "coding-agent",
+            "max_tokens": 220000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": true,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      }
+    }
+  },
   "agent_servers": {
     "claude-acp": {
       "type": "registry"
@@ -16,6 +41,12 @@
     "dock": "left",
   },
   "agent": {
+    "default_model": {
+      "provider": "OmniRouter",
+      "model": "coding-agent",
+      "enable_thinking": true,
+      "effort": "high"
+    },
     "dock": "right",
     "favorite_models": [],
     "model_parameters": [],

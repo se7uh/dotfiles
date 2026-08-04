@@ -13,7 +13,7 @@
   },
   {
     "name": "mari",
-    "command": "pnpm start",
+    "command": "~/.local/share/pnpm/bin/pnpm start",
     "working_directory": "~/project/mari"
   }
 ]

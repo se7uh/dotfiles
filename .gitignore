@@ -1,0 +1,8 @@
+.agents/skills
+.claude/skills
+.scratch/dotfiles-helper
+docs
+AGENTS.md
+CLAUDE.md
+CONTEXT.md
+skills-lock.json

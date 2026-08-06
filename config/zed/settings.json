@@ -59,12 +59,19 @@
   "agent": {
     "default_model": {
       "provider": "OmniRouter",
-      "model": "coding-agent",
+      "model": "coding-agent-fast",
       "enable_thinking": true,
       "effort": "high"
     },
     "dock": "right",
-    "favorite_models": [],
+    "favorite_models": [
+      {
+        "provider": "OmniRouter",
+        "model": "coding-agent-fast",
+        "enable_thinking": true,
+        "effort": "high"
+      }
+    ],
     "model_parameters": [],
   },
   "git_panel": {

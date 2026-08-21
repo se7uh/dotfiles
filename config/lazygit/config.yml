@@ -1,0 +1,6 @@
+git:
+  autoFetch: true
+  fetchAll: true  # fetch all branches
+
+refresher:
+  fetchInterval: 600  # 10 minutes

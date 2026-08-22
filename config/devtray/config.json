@@ -3,13 +3,13 @@
     "name": "OmniRoute",
     "command": "~/.local/share/pnpm/bin/omniroute serve --no-open",
     "working_directory": "~",
-    "group": "Hermes \u0026 OmniRoute"
+    "group": "Hermes & OmniRoute"
   },
   {
     "name": "Hermes WebUI",
     "command": "python bootstrap.py --foreground",
     "working_directory": "~/project/hermes-webui",
-    "group": "Hermes \u0026 OmniRoute"
+    "group": "Hermes & OmniRoute"
   },
   {
     "name": "mari",

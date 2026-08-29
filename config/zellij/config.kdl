@@ -1,6 +1,7 @@
 theme "tokyo-night-dark"
 pane_frame_style "full"
 default_mode "normal"
+scroll_mode_sync false
 
 // Save layout & scrollback history on session exit
 session_serialization true
